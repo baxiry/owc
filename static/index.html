@@ -1,0 +1,43 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> -->
+    <script src="static/marked.min.js"></script>
+
+
+    <title>ollama Client</title>
+    <style ></style>
+</head>
+<body>
+    <h2>Chat with Ollama</h2>
+
+    <button id="theme-toggle" onclick="toggleDarkMode()">🌙</button>
+
+    <div id="chat-box"></div>
+
+    <!--
+    <div id="input-area">
+    <input type="text" id="user-input" placeholder="Type a message...">
+    <button onclick="sendMessage()">Send</button>
+    </div>
+    -->
+
+
+    <div id="input-area">
+    <textarea id="user-input" placeholder="Type a message..."></textarea>
+    <button onclick="sendMessage()">Send</button>
+    </div>
+    
+    <script src="static/app.js"></script>
+</body>
+</html>
+
