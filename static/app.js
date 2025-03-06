@@ -6,14 +6,14 @@ async function sendMessage() {
     const chatBox = document.getElementById("chat-box");
     chatBox.innerHTML += `<div class="message user">${userInput}</div>`;
 
-    document.getElementById("user-input").value = ""; // مسح حقل النص
-
+    document.getElementById("user-input").value = ""; 
     try {
         const response = await fetch("http://127.0.0.1:11434/api/generate", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                model: "llama3.2", // تأكد من أنك تستخدم النموذج الصحيح
+                // TODO make model changable
+                model: "llama3.2", 
                 prompt: userInput,
                 stream: false
             })
@@ -21,41 +21,36 @@ async function sendMessage() {
 
         const data = await response.json();
 
-
-
         let text = data.response || "No response";
-
 
         let convertedHtml = marked.parse(text);
 
         chatBox.innerHTML += `<div class="">${convertedHtml}</div>`; // message bot
 
-        // جعل التمرير لأسفل عند إضافة رسالة جديدة
         chatBox.scrollTop = chatBox.scrollHeight;
     } catch (error) {
         console.log(error);
     }
 }
 
-// توسيع حقل النص حسب الأسطر المكتوبة
 const userInput = document.getElementById('user-input');
 userInput.addEventListener('input', function () {
-    this.style.height = 'auto'; // إعادة تعيين الارتفاع التلقائي
-    this.style.height = (this.scrollHeight) + 'px'; // تعيين الارتفاع حسب النص
+    this.style.height = 'auto';
+    this.style.height = (this.scrollHeight) + 'px'; 
 });
 
 
 // Function to toggle dark mode
 function toggleDarkMode() {
     const body = document.body;
-    body.classList.toggle('dark-mode'); // Toggle the dark-mode class
+    body.classList.toggle('dark-mode'); 
 
     // Optionally, save the user's preference in localStorage
     if (body.classList.contains('dark-mode')) {
         localStorage.setItem('theme', 'dark');
-    } else {
-        localStorage.setItem('theme', 'light');
+        return
     }
+    localStorage.setItem('theme', 'light');
 }
 
 // Check for user's saved theme preference (if any) when the page loads
@@ -64,5 +59,5 @@ window.onload = function() {
     if (savedTheme === 'dark') {
         document.body.classList.add('dark-mode');
     }
-};
+}
 
