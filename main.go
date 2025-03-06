@@ -17,8 +17,8 @@ func main() {
 
 	http.HandleFunc("/", index)
 
-	log.Println("Server started at http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Println("Server started at http://localhost:5678")
+	log.Fatal(http.ListenAndServe(":5678", nil))
 }
 
 func index(w http.ResponseWriter, _ *http.Request) {
