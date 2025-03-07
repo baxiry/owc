@@ -60,4 +60,11 @@ window.onload = function() {
         document.body.classList.add('dark-mode');
     }
 }
-
+ // handle & send query
+userInput.addEventListener('keydown', function(event) {
+    if ((event.metaKey || event.altKey ) && event.key === 'Enter' ) {
+        console.log(userInput.value)
+        sendMessage(userInput)
+        return
+    }
+})
