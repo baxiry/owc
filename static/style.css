@@ -56,22 +56,8 @@ body {
     padding-bottom: 20px; /* لتفادي التداخل مع النصوص الأخيرة */
 }
 
-/* قسم الإدخال الذي يظل في الأسفل */
-#input-area {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background: var(--input-bg);
-    padding: 10px;
-    display: flex;
-    border-top: 1px solid var(--border-color);
-    align-items: center;
-    /*gap: 10px;*/
-    z-index: 10; /* للتأكد من أنه دائمًا في الأسفل */
-    padding-bottom: 10px; /* المساحة أسفل الحقل */
-}
 
-/* حقل النص */
+/* تحديث حقل الإدخال لتجنب الإزاحة */
 #user-input {
     flex-grow: 1;
     padding: 12px;
@@ -84,12 +70,28 @@ body {
     overflow-y: hidden; /* إخفاء التمرير العمودي */
     min-height: 40px;
     max-height: 150px; /* الحد الأقصى للارتفاع */
+    box-sizing: border-box; /* تأكد من أن padding + border لا يؤثران على الحجم الكلي */
 }
 
-/* زر الإرسال */
+/* تحديث قسم الإدخال */
+#input-area {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: var(--input-bg);
+    padding: 10px;
+    display: flex;
+    border-top: 1px solid var(--border-color);
+    align-items: center;
+    z-index: 10; /* للتأكد من أنه دائمًا في الأسفل */
+    padding-bottom: 10px; /* المساحة أسفل الحقل */
+    box-sizing: border-box; /* تأكد من أن الحشو لا يؤثر على العرض الكلي */
+}
+
+/* إصلاح مساحة الزر */
 button {
     padding: 12px 15px;
-    margin: 20px;
+    margin: 0; /* إزالة الهوامش الزائدة التي قد تؤثر على المحاذاة */
     background: var(--button-bg);
     color: white;
     border: none;
@@ -98,9 +100,16 @@ button {
     transition: background 0.3s;
 }
 
+/* محاذاة الزر بشكل صحيح */
+#input-area button {
+    margin-left: 10px; /* إضافة مساحة بسيطة بين حقل النص والزر */
+}
+
 button:hover {
     background: var(--button-hover-bg);
 }
+
+
 
 /* رسائل المستخدم والبوت */
 .message {
@@ -124,12 +133,15 @@ button:hover {
 }
 
 pre code {
-    background-color: #2d2d2d;
-    color: #f5f5f5;
-    padding: 10px;
-    border-radius: 5px;
     display: block;
-    white-space: pre-wrap;
-    word-wrap: break-word;
+    overflow-x: auto;
+    padding: 1em;
+    border-radius: 5px;
+}
+
+/* تحسين الوضع الداكن */
+.dark-mode pre code {
+    background: #2d2d2d !important;
+    color: #f8f8f2 !important;
 }
 

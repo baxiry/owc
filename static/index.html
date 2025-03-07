@@ -2,16 +2,29 @@
 <html lang="en">
 <head>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("pre code").forEach((el) => {
+        hljs.highlightElement(el);
+    });
+});
+</script>
+
+<!--<script>hljs.highlightAll();</script>-->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="static/style.css">
     <script src="static/marked.min.js"></script>
 
-    <title>ollama Client</title>
-    <style ></style>
+    <title>owc</title>
+
 </head>
 <body>
-    <h2>Chat with Ollama</h2>
+    <h3>OWC</h3>
 
     <button id="theme-toggle" onclick="toggleDarkMode()">🌙</button>
 

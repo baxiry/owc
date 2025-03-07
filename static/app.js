@@ -25,12 +25,15 @@ async function sendMessage() {
 
         let convertedHtml = marked.parse(text);
 
-        chatBox.innerHTML += `<div class="">${convertedHtml}</div>`; // message bot
+        chatBox.innerHTML += `<div>${convertedHtml}</div>`; // message bot
 
         chatBox.scrollTop = chatBox.scrollHeight;
     } catch (error) {
         console.log(error);
     }
+
+    // Highlight code after message reseved
+    highlightNewCode();
 }
 
 const userInput = document.getElementById('user-input');
@@ -68,3 +71,21 @@ userInput.addEventListener('keydown', function(event) {
         return
     }
 })
+
+
+// Highlight code after page load
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("pre code").forEach((block) => {
+        hljs.highlightElement(block);
+    });
+});
+
+
+
+// Highlight code after message reseved
+function highlightNewCode() {
+    document.querySelectorAll("pre code").forEach((block) => {
+        hljs.highlightElement(block);
+    });
+}
+
