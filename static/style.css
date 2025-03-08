@@ -1,176 +1,227 @@
+/* Global color variables */
 :root {
-    --bg-color:  lightgray;
-    --text-color:  #333;
-    --input-bg: #fff;
-    --border-color: #ccc;
-    --button-bg: #007bff;
-    --button-hover-bg: #0056b3;
+    --bg-color: #f4f4f4;
+    --text-color: #222;
+    --input-bg: #ffffff;
+    --border-color: #d1d1d1;
+    --button-bg: #0077cc;
+    --button-hover-bg: #005fa3;
+    --header-btn-bg-hover: rgba(0, 0, 0, 0.1);
 }
 
+/* Dark mode color variables */
 .dark-mode {
-    --bg-color: #1e1e1e;
-    --text-color: lightgray /* #f5f5f5 */;
-    --input-bg: #333;
+    --bg-color: #181818;
+    --text-color: #e0e0e0;
+    --input-bg: #222;
     --border-color: #444;
-    --button-bg: #00aaff;
-    --button-hover-bg: #0088cc;
+    --button-bg: #1e90ff;
+    --button-hover-bg: #1572c0;
+    --header-btn-bg-hover: rgba(255, 255, 255, 0.1);
 }
 
-#theme-toggle {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    background: var(--button-bg);
-    color: lightgray;
-    border: none;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background 0.3s;
-}
-
+/* General styles */
 body {
-    font-family: Arial, sans-serif;
-    padding: 0;
+    font-family: 'Arial', sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
     display: flex;
     flex-direction: column;
+    align-items: center;
     height: 100vh;
-    overflow: hidden;
-    transition: all 0.3s ease;
+    padding: 0;
+    margin: 0;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
-.icon {
-    width: 28px;
-    height: 28px;
-    filter: invert(0); /* افتراضي: أسود */
-    /* transition: filter 0.3s ease; */
+/* Header styles */
+#app-header {
+    width: 100%;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
-.dark-mode .icon {
-    filter: invert(1); /* يتحول إلى أبيض */
+/* App title */
+#app-header h1 {
+    font-size: 1.2em;
+    color: var(--text-color);
+    margin: 0;
 }
 
-/*
-.icon-only {
-    background: none;
+/* Header buttons container */
+.header-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+/* Theme toggle & language selector button */
+#theme-toggle,
+#language-selector {
     border: none;
+    background: transparent;
+    padding: 8px;
     cursor: pointer;
-    padding: 5px;
+    font-size: 0.9em;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border-radius: 5px;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
-.icon-only img {
-    width: 24px;
-    height: 24px;
+/* Hover effect */
+#theme-toggle:hover,
+#language-selector:hover {
+    background: var(--header-btn-bg-hover);
 }
 
- */
+/* Icon styling */
+.icon {
+    width: 22px;
+    height: 22px;
+    transition: filter 0.3s ease;
+}
 
+/* Change icon color based on theme */
+.dark-mode .icon {
+    filter: invert(1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #app-header h1 {
+        font-size: 1.1em;
+    }
+
+    .icon {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Chat container */
+#chat-container {
+    width: 100%;
+    max-width: 70%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: var(--input-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: max-width 0.3s ease;
+}
+
+/* Chat box */
 #chat-box {
     flex-grow: 1;
-    width: 100%;
     overflow-y: auto;
     padding: 15px;
     box-sizing: border-box;
-    border-bottom: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
-    overflow-x: hidden;
-    margin-bottom: 80px;
-    padding-bottom: 20px;
+    gap: 10px;
+    border-bottom: 1px solid var(--border-color);
 }
 
+/* Chat input area */
+#input-area {
+    display: flex;
+    padding: 10px;
+    background: var(--input-bg);
+    border-top: 1px solid var(--border-color);
+}
+
+/* User input field */
 #user-input {
     flex-grow: 1;
-    padding: 12px;
+    padding: 10px;
     border: 1px solid var(--border-color);
     border-radius: 5px;
-    background: var(--bg-color);
-    color: var(--text-color);
-    outline: none;
-    resize: none; 
-    overflow-y: hidden; 
-    min-height: 40px;
-    max-height: 150px; 
-    box-sizing: border-box;
-}
-
-#input-area {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
     background: var(--input-bg);
-    padding: 10px;
-    display: flex;
-    border-top: 1px solid var(--border-color);
-    align-items: center;
-    z-index: 10; 
-    padding-bottom: 10px;
-    box-sizing: border-box;
+    color: var(--text-color);
+    resize: none;
+    min-height: 40px;
+    outline: none;
 }
 
+/* Send button */
 button {
-    padding: 12px 15px;
-    margin: 0; 
+    padding: 10px, 15px;
+    margin-left: 10px;
+    margin-bottom: 10px;
     background: var(--button-bg);
-    color: lightgray;
+    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s;
-}
-
-#input-area button {
-    margin-left: 10px;
+    transition: background 0.3s ease;
+    height: 40px; /* تثبيت الارتفاع */
+    align-self: flex-end; /* إبقاء الزر في الأسفل */
 }
 
 button:hover {
     background: var(--button-hover-bg);
 }
 
+
+button:hover {
+    background: var(--button-hover-bg);
+}
+
+/* Chat message styles */
 .message {
     max-width: 80%;
     padding: 10px;
     border-radius: 8px;
-    margin-bottom: 10px;
     word-wrap: break-word;
 }
 
+/* User messages */
 .user {
     background: var(--button-bg);
-    color: yellow;
+    color: white;
+    align-self: flex-end;
 }
 
+/* Dark mode user messages */
 .dark-mode .message.user {
-    background: #443627 /* var(--button-bg)*/ !important;
-    color: lightgray !important;
+    background: #37474f;
+    color: white;
 }
 
+/* Bot messages */
 .bot {
     background: var(--border-color);
     color: var(--text-color);
     align-self: flex-start;
 }
 
+/* Code block styling */
 pre code {
     display: block;
-    overflow-x: auto;
     padding: 1em;
     border-radius: 5px;
+    overflow-x: auto;
 }
 
+/* Dark mode code block */
 .dark-mode pre code {
     background: #2d2d2d !important;
     color: #f8f8f2 !important;
 }
 
-.dark-mode button {
-    background: #444 !important; 
-    color: lightgray !important; 
-    border: 1px solid #666; 
+/* Responsive design */
+@media (max-width: 768px) {
+    #chat-container {
+        max-width: 100%;
+        border-radius: 0;
+    }
 }
 
-.dark-mode button:hover {
-    background: #555 !important; 
-}
