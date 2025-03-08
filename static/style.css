@@ -1,6 +1,6 @@
 :root {
-    --bg-color: #f5f5f5;
-    --text-color: #333;
+    --bg-color:  lightgray;
+    --text-color:  #333;
     --input-bg: #fff;
     --border-color: #ccc;
     --button-bg: #007bff;
@@ -9,7 +9,7 @@
 
 .dark-mode {
     --bg-color: #1e1e1e;
-    --text-color: #f5f5f5;
+    --text-color: lightgray /* #f5f5f5 */;
     --input-bg: #333;
     --border-color: #444;
     --button-bg: #00aaff;
@@ -21,7 +21,7 @@
     top: 10px;
     right: 10px;
     background: var(--button-bg);
-    color: white;
+    color: lightgray;
     border: none;
     padding: 8px 12px;
     cursor: pointer;
@@ -40,6 +40,32 @@ body {
     overflow: hidden;
     transition: all 0.3s ease;
 }
+
+.icon {
+    width: 28px;
+    height: 28px;
+    filter: invert(0); /* افتراضي: أسود */
+    /* transition: filter 0.3s ease; */
+}
+
+.dark-mode .icon {
+    filter: invert(1); /* يتحول إلى أبيض */
+}
+
+/*
+.icon-only {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.icon-only img {
+    width: 24px;
+    height: 24px;
+}
+
+ */
 
 #chat-box {
     flex-grow: 1;
@@ -88,7 +114,7 @@ button {
     padding: 12px 15px;
     margin: 0; 
     background: var(--button-bg);
-    color: white;
+    color: lightgray;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -113,8 +139,12 @@ button:hover {
 
 .user {
     background: var(--button-bg);
-    color: white;
-    align-self: flex-end;
+    color: yellow;
+}
+
+.dark-mode .message.user {
+    background: #443627 /* var(--button-bg)*/ !important;
+    color: lightgray !important;
 }
 
 .bot {
@@ -130,9 +160,17 @@ pre code {
     border-radius: 5px;
 }
 
-/* تحسين الوضع الداكن */
 .dark-mode pre code {
     background: #2d2d2d !important;
     color: #f8f8f2 !important;
 }
 
+.dark-mode button {
+    background: #444 !important; 
+    color: lightgray !important; 
+    border: 1px solid #666; 
+}
+
+.dark-mode button:hover {
+    background: #555 !important; 
+}

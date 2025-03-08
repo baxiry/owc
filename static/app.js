@@ -73,15 +73,6 @@ userInput.addEventListener('keydown', function(event) {
 })
 
 
-// Highlight code after page load
-document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll("pre code").forEach((block) => {
-        hljs.highlightElement(block);
-    });
-});
-
-
-
 // Highlight code after message reseved
 function highlightNewCode() {
     document.querySelectorAll("pre code").forEach((block) => {
@@ -89,3 +80,15 @@ function highlightNewCode() {
     });
 }
 
+// Highlight code after page load
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("pre code").forEach((block) => {
+        hljs.highlightElement(block);
+        console.log("highlight all");
+    });
+});
+
+/* end
+ *
+ *
+ */

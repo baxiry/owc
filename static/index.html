@@ -3,29 +3,34 @@
 <head>
 
 <script>
+/*
 document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll("pre code").forEach((el) => {
         hljs.highlightElement(el);
     });
 });
+*/
 </script>
 
-<!--<script>hljs.highlightAll();</script>-->
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" type="text/css" href="static/style.css">
     <link rel="stylesheet" type="text/css" href="static/github-dark.min.css">
     <script src="static/highlight.min.js"></script>
     <script src="static/marked.min.js"></script>
 
+    <link rel="icon" href="static/letter-q.png" type="image/png">
     <title>owc</title>
 
 </head>
 <body>
     <h3>OWC</h3>
 
-    <button id="theme-toggle" onclick="toggleDarkMode()">🌙</button>
+    <button class="icon-only" id="theme-toggle" onclick="toggleDarkMode()">
+        <img src="static/small-dark.png" alt="Icon" class="icon">
+    </button>
 
     <div id="chat-box"></div>
 
@@ -35,6 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
     
     <script src="static/app.js"></script>
+
+<script></script>
 </body>
 </html>
 
