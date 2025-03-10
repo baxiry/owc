@@ -162,8 +162,8 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s ease;
-    height: 40px; /* تثبيت الارتفاع */
-    align-self: flex-end; /* إبقاء الزر في الأسفل */
+    height: 40px; 
+    align-self: flex-end; 
 }
 
 button:hover {
