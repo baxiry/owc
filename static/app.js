@@ -45,7 +45,7 @@ async function sendMessage() {
 // ✅ حركة نقاط التحميل
 function animateLoadingDots(element) {
     let count = 0;
-    let dots = ["● ○ ○ ○ ○", "● ● ○ ○ ○", "● ● ● ○ ○", "● ● ● ● ○", "● ● ● ● ●"];
+    let dots = ["○ ○ ○ ○ ○", "● ○ ○ ○ ○", "● ● ○ ○ ○", "● ● ● ○ ○", "● ● ● ● ○", "● ● ● ● ●"];
     let animation = setInterval(() => {
         element.innerHTML = dots[count % dots.length];
         count++;
