@@ -225,3 +225,24 @@ pre code {
     }
 }
 
+/* ✅ Copy button styling */
+.copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 5px 10px;
+    font-size: 0.8em;
+    background: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, opacity 0.3s;
+    opacity: 0.7;
+}
+
+.copy-btn:hover {
+    background: var(--button-hover-bg);
+    opacity: 1;
+}
+

@@ -1,25 +1,29 @@
 async function sendMessage() {
-    const userInput = document.getElementById("user-input").value;
+    const userInputElement = document.getElementById("user-input");
+    const userInput = userInputElement.value;
     if (!userInput) return;
 
     const chatBox = document.getElementById("chat-box");
     chatBox.innerHTML += `<div class="message user">${userInput}</div>`;
     chatBox.scrollTop = chatBox.scrollHeight;
 
-    document.getElementById("user-input").value = "";
+    userInputElement.value = "";
 
-    // ✅ إنشاء عنصر مؤشر التحميل
+    // إعادة تعيين ارتفاع textarea إلى الوضع الافتراضي بعد الإرسال
+    userInputElement.style.height = "auto";
+
+    // Create a loading indicator element
     let loadingDots = document.createElement("div");
     loadingDots.classList.add("loading-dots");
     chatBox.appendChild(loadingDots);
-    animateLoadingDots(loadingDots); // ✅ تفعيل الحركة
+    animateLoadingDots(loadingDots); // Activate animation
 
     try {
         const response = await fetch("http://127.0.0.1:11434/api/generate", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                model: "llama3.2",
+                model: "gemma3:1b",
                 prompt: userInput,
                 stream: false
             })
@@ -29,178 +33,107 @@ async function sendMessage() {
         let text = data.response || "No response";
         let convertedHtml = marked.parse(text);
 
-        // ✅ استبدال مؤشر التحميل بالرد الفعلي
+        // Replace the loading indicator with the actual response
         loadingDots.outerHTML = `<div class="message bot">${convertedHtml}</div>`;
 
         chatBox.scrollTop = chatBox.scrollHeight;
     } catch (error) {
         console.log(error);
-        loadingDots.outerHTML = `<div class="message bot error">⚠️ حدث خطأ أثناء جلب الرد</div>`;
+        loadingDots.outerHTML = `<div class="message bot error">⚠️ An error occurred while fetching the response</div>`;
     }
 
-    // ✅ تلوين الكود بعد استلام الرسالة
+    // Highlight code after receiving the message
     highlightNewCode();
 }
 
-// ✅ حركة نقاط التحميل
+// Add copy button to all code blocks
+function addCopyButtons() {
+    document.querySelectorAll("pre code").forEach((block) => {
+        let copyButton = document.createElement("button");
+        copyButton.className = "copy-btn";
+        copyButton.innerText = "Copy";
+        
+        copyButton.addEventListener("click", () => {
+            copyCodeToClipboard(block, copyButton);
+        });
+
+        let preElement = block.parentElement;
+        preElement.style.position = "relative";
+        preElement.appendChild(copyButton);
+    });
+}
+
+// Copy code to clipboard and show feedback
+function copyCodeToClipboard(codeBlock, button) {
+    let text = codeBlock.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        button.innerText = "Copied!";
+        setTimeout(() => {
+            button.innerText = "Copy";
+        }, 2000);
+    }).catch(err => console.error("Error copying text:", err));
+}
+
+// Run after page loads
+document.addEventListener("DOMContentLoaded", () => {
+    highlightNewCode(); // Highlight existing code
+    addCopyButtons();   // Add copy buttons
+});
+
+
+
+// Loading dots animation
 function animateLoadingDots(element) {
     let count = 0;
     let dots = ["○ ○ ○ ○ ○", "● ○ ○ ○ ○", "● ● ○ ○ ○", "● ● ● ○ ○", "● ● ● ● ○", "● ● ● ● ●"];
     let animation = setInterval(() => {
         element.innerHTML = dots[count % dots.length];
         count++;
-    }, 500); // ✅ تغيير كل 500 مللي ثانية
+    }, 500); // Change every 500 milliseconds
 
-    // ✅ إيقاف التحميل عند تلقي الرد
+    // Stop loading animation when response is received
     element.dataset.animation = animation;
 }
 
-// ✅ تحسين إدخال النص
+// Adjust input field height dynamically
 const userInput = document.getElementById('user-input');
 userInput.addEventListener('input', function () {
     this.style.height = 'auto';
     this.style.height = (this.scrollHeight) + 'px';
 });
 
-// ✅ تبديل الوضع الداكن
+// Toggle dark mode
 function toggleDarkMode() {
     const body = document.body;
     body.classList.toggle('dark-mode');
     localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
 }
 
-// ✅ استعادة الوضع الداكن عند تحميل الصفحة
+// Restore dark mode preference on page load
 window.onload = function() {
     if (localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark-mode');
     }
 };
 
-// ✅ إرسال الرسالة عند الضغط على `Alt + Enter` أو `Cmd + Enter`
+// Send message when pressing `Alt + Enter` or `Cmd + Enter`
 userInput.addEventListener('keydown', function(event) {
     if ((event.metaKey || event.altKey) && event.key === 'Enter') {
         sendMessage();
     }
 });
 
-// ✅ تلوين الأكواد الجديدة بعد استلام الرسائل
+// Highlight newly received code snippets
 function highlightNewCode() {
     document.querySelectorAll("pre code").forEach((block) => {
         hljs.highlightElement(block);
     });
 }
 
-// ✅ تلوين الأكواد بعد تحميل الصفحة
+// Highlight code snippets after the page loads
 document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll("pre code").forEach((block) => {
         hljs.highlightElement(block);
     });
 });
 
-
-
-/*
- async function sendMessage() {
-    const userInput = document.getElementById("user-input").value;
-    if (!userInput) return;
-
-    const chatBox = document.getElementById("chat-box");
-    chatBox.innerHTML += `<div class="message user">${userInput}</div>`;
-    chatBox.scrollTop = chatBox.scrollHeight;
-
-    document.getElementById("user-input").value = "";
-
-    // ✅ إنشاء عنصر مؤشر التحميل
-    let loadingDots = document.createElement("div");
-    loadingDots.classList.add("loading-dots");
-    chatBox.appendChild(loadingDots);
-    animateLoadingDots(loadingDots); // ✅ تفعيل الحركة
-
-    try {
-        const response = await fetch("http://127.0.0.1:11434/api/generate", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                model: "llama3.2",
-                prompt: userInput,
-                stream: false
-            })
-        });
-
-        const data = await response.json();
-        let text = data.response || "No response";
-        let convertedHtml = marked.parse(text);
-
-        // ✅ استبدال مؤشر التحميل بالرد الفعلي
-        loadingDots.outerHTML = `<div class="message bot">${convertedHtml}</div>`;
-
-        chatBox.scrollTop = chatBox.scrollHeight;
-    } catch (error) {
-        console.log(error);
-        loadingDots.outerHTML = `<div class="message bot error">⚠️ حدث خطأ أثناء جلب الرد</div>`;
-    }
-
-    // ✅ تلوين الكود بعد استلام الرسالة
-    highlightNewCode();
-}
-
-// ✅ حركة نقاط التحميل
-function animateLoadingDots(element) {
-    let count = 0;
-    let dots = ["● ○ ○ ○ ○", "● ● ○ ○ ○", "● ● ● ○ ○", "● ● ● ● ○", "● ● ● ● ●"];
-    let animation = setInterval(() => {
-        element.innerHTML = dots[count % dots.length];
-        count++;
-    }, 500); // ✅ تغيير كل 500 مللي ثانية
-
-    // ✅ إيقاف التحميل عند تلقي الرد
-    element.dataset.animation = animation;
-}
-
-// ✅ تحسين إدخال النص
-const userInput = document.getElementById('user-input');
-userInput.addEventListener('input', function () {
-    this.style.height = 'auto';
-    this.style.height = (this.scrollHeight) + 'px';
-});
-
-// ✅ تبديل الوضع الداكن
-function toggleDarkMode() {
-    const body = document.body;
-    body.classList.toggle('dark-mode');
-    localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
-}
-
-// ✅ استعادة الوضع الداكن عند تحميل الصفحة
-window.onload = function() {
-    if (localStorage.getItem('theme') === 'dark') {
-        document.body.classList.add('dark-mode');
-    }
-};
-
-// ✅ إرسال الرسالة عند الضغط على `Alt + Enter` أو `Cmd + Enter`
-userInput.addEventListener('keydown', function(event) {
-    if ((event.metaKey || event.altKey) && event.key === 'Enter') {
-        sendMessage();
-    }
-});
-
-// ✅ تلوين الأكواد الجديدة بعد استلام الرسائل
-function highlightNewCode() {
-    document.querySelectorAll("pre code").forEach((block) => {
-        hljs.highlightElement(block);
-    });
-}
-
-// ✅ تلوين الأكواد بعد تحميل الصفحة
-document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll("pre code").forEach((block) => {
-        hljs.highlightElement(block);
-    });
-});
-
- *
- * end
- *
- *
- */
